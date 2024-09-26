@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('id_autor')->references('id')
             ->on('cadernos')->onDelete('cascade')
             ->onUpdate('cascade');
+            
             $table->timestamps();
         });
     }
