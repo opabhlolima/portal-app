@@ -20,8 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_autor'); 
             $table->foreign('id_autor')->references('id')
             ->on('cadernos')->onDelete('cascade')
-            ->onUpdate('cascade');
-            
+            ->onUpdate('cascade');            
             $table->timestamps();
         });
     }
