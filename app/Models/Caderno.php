@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Caderno extends Model
 {
     use HasFactory;
+
+    // sanitização dos dados e criação em massa
+    protected $fillable = ['nome'];
+
 }
