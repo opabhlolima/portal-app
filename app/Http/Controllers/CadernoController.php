@@ -1,73 +1,87 @@
 <?php
 
-    namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-    use App\Http\Requests\StoreCadernoRequest;
-    use App\Http\Requests\UpdateCadernoRequest;
-    use App\Models\Caderno;
+use App\Http\Requests\StoreCadernoRequest;
+use App\Http\Requests\UpdateCadernoRequest;
+use App\Models\Caderno;
 
-    class CadernoController extends Controller
+class CadernoController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        /**
-         * Display a listing of the resource.
-         */
-        public function index()
-        {
-            //Carregue os dados dos banco
-            //select * from cadernos
-            $cadernos = Caderno::all();
-            // Fazer o response pro usuario
-            return view('admin.cadernos.index', compact('cadernos'));
-        }
+        //Carregue os dados dos banco
+        //select * from cadernos
+        $cadernos = Caderno::paginate(25);
+        // Fazer o response pro usuario
+        return view('admin.cadernos.index', compact('cadernos'));
+    }
 
-        /**
-         * Show the form for creating a new resource.
-         */
-        public function create()
-        {
-            //Retornar a pagina de criação
-            return view('admin.cadernos.create');
-        }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //Retornar a pagina de criação
+        return view('admin.cadernos.create');
+    }
 
-        /**
-         * Store a newly created resource in storage.
-         */
-        public function store(StoreCadernoRequest $request)
-        {
-            //Debug
-            // dd($request);
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreCadernoRequest $request)
+    {
+        Caderno::create($request->all());
 
-        }
+        return redirect()->away('/cadernos')
+            ->with('success', 'Caderno criado com sucesso!');
+    }
 
-        /**
-         * Display the specified resource.
-         */
-        public function show(Caderno $caderno)
-        {
-            //
-        }
+    /**
+     * Display the specified resource.
+     */
+    public function show(Caderno $caderno)
+    {
+        //
+        return view('admin.cadernos.show', compact('caderno'));
+    }
 
-        /**
-         * Show the form for editing the specified resource.
-         */
-        public function edit(Caderno $caderno)
-        {
-            //
-        }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Caderno $caderno)
+    {
+        //
+        return view('admin.cadernos.edit', compact('caderno'));
+    }
 
-        /**
-         * Update the specified resource in storage.
-         */
-        public function update(UpdateCadernoRequest $request, Caderno $caderno)
-        {
-            //
-        }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateCadernoRequest $request, Caderno $caderno)
+    {
+        //
+        $caderno->update($request->all());
+        return redirect()->away('/cadernos')
+            ->with('success', 'Caderno atualizado com sucesso!');
+    }
 
-        /**
-         * Remove the specified resource from storage.
-         */
-        public function destroy(Caderno $caderno)
-        {
-            //
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Caderno $caderno)
+    {
+        //
+        if ($caderno->noticias()->count() > 0) {
+            return redirect()->away('/cadernos')
+                ->with('error', 'Caderno possui dependentes!');
+        } else {
+            $caderno->delete();
+            return redirect()->away('/cadernos')
+                ->with('success', 'Caderno removido com sucesso!');
         }
     }
+}
