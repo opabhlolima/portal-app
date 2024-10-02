@@ -84,5 +84,5 @@ class TipoPontoTuristicoController extends Controller
         return redirect()->away('/tipopontoturisticos')
             ->with('success', 'Tipo Ponto Turistico removido com sucesso!');
     }
-    }
+    
 }
