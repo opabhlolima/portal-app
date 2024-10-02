@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('subtitulo');
             $table->text('texto'); 
-
             $table->unsignedBigInteger('id_autor'); 
             $table->foreign('id_autor')->references('id')
             ->on('autores')->onDelete('cascade')
