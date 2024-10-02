@@ -62,5 +62,12 @@ class EnderecoController extends Controller
     public function destroy(Endereco $endereco)
     {
         //
+        if($endereco->negocios()->count > 0 
+        || $endereco->pontosTuristicos()->count() > 0)
+        {
+
+        }else{
+            
+        }
     }
 }
