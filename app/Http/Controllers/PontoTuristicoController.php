@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePontoTuristicoRequest;
 use App\Http\Requests\UpdatePontoTuristicoRequest;
+use App\Models\Endereco;
 use App\Models\PontoTuristico;
+use App\Models\TipoPontoTuristico;
 
 class PontoTuristicoController extends Controller
 {
@@ -14,6 +16,8 @@ class PontoTuristicoController extends Controller
     public function index()
     {
         //
+        $pontos = PontoTuristico::paginate(25);
+        return view('admin.pontosturisticos.index', compact('pontos'));
     }
 
     /**
@@ -22,6 +26,12 @@ class PontoTuristicoController extends Controller
     public function create()
     {
         //
+        $tipos = TipoPontoTuristico::all();
+        $enderecos = Endereco::all();
+        return view(
+            'admin.pontosturisticos.create',
+            compact('tipos', 'enderecos')
+        );
     }
 
     /**
@@ -30,6 +40,9 @@ class PontoTuristicoController extends Controller
     public function store(StorePontoTuristicoRequest $request)
     {
         //
+        PontoTuristico::create($request->all());
+        return redirect()->away('/pontosturisticos')
+            ->with('success', 'Pontos Turistico criado com sucesso!');
     }
 
     /**
@@ -38,6 +51,10 @@ class PontoTuristicoController extends Controller
     public function show(PontoTuristico $pontoTuristico)
     {
         //
+        return view(
+            'admin.pontosturisticos.show',
+            compact('pontoTuristico')
+        );
     }
 
     /**
@@ -46,6 +63,12 @@ class PontoTuristicoController extends Controller
     public function edit(PontoTuristico $pontoTuristico)
     {
         //
+        $tipos = TipoPontoTuristico::all();
+        $enderecos = Endereco::all();
+        return view(
+            'admin.pontosturisticos.edit',
+            compact('tipos', 'enderecos', 'pontoTuristico')
+        );
     }
 
     /**
@@ -54,6 +77,10 @@ class PontoTuristicoController extends Controller
     public function update(UpdatePontoTuristicoRequest $request, PontoTuristico $pontoTuristico)
     {
         //
+        $pontoTuristico->update($request->all());
+
+        return redirect()->away('/pontosturisticos')
+            ->with('success', 'Pontos Turistico atualizado com sucesso!');
     }
 
     /**
@@ -62,5 +89,8 @@ class PontoTuristicoController extends Controller
     public function destroy(PontoTuristico $pontoTuristico)
     {
         //
+        $pontoTuristico->delete();
+        return redirect()->away('/pontosturisticos')
+            ->with('success', 'Pontos Turistico removido com sucesso!');
     }
 }
