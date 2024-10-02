@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEnderecoRequest;
 use App\Http\Requests\UpdateEnderecoRequest;
+use App\Models\Cidade;
 use App\Models\Endereco;
 
 class EnderecoController extends Controller
@@ -24,6 +25,9 @@ class EnderecoController extends Controller
     public function create()
     {
         //
+        $cidades = Cidade::all();
+        
+        return view('admin.enderecos.index', compact('cidades'));
     }
 
     /**
@@ -32,6 +36,9 @@ class EnderecoController extends Controller
     public function store(StoreEnderecoRequest $request)
     {
         //
+        Endereco::create($request->all());
+        return redirect()->away('/enderecos')
+        ->with('success', 'Endereços possui dependentes!');
     }
 
     /**
@@ -40,6 +47,7 @@ class EnderecoController extends Controller
     public function show(Endereco $endereco)
     {
         //
+        return view('admin.enderecos.index', compact('endereco'));
     }
 
     /**
@@ -47,7 +55,9 @@ class EnderecoController extends Controller
      */
     public function edit(Endereco $endereco)
     {
-        //
+        $cidades = Cidade::all();
+        
+        return view('admin.enderecos.index', compact('cidades','endereco'));
     }
 
     /**
@@ -56,6 +66,10 @@ class EnderecoController extends Controller
     public function update(UpdateEnderecoRequest $request, Endereco $endereco)
     {
         //
+        $endereco->update($request->all());
+
+        return redirect()->away('/enderecos')
+            ->with('success', 'Endereço possui dependentes!');
     }
 
     /**
@@ -65,11 +79,14 @@ class EnderecoController extends Controller
     {
         //
         if($endereco->negocios()->count > 0 
-        || $endereco->pontosTuristicos()->count() > 0)
+       ||  $endereco->pontosTuristicos()->count() > 0)
         {
-
-        }else{
-            
+            return redirect()->away('/enderecos')
+            ->with('error', 'Endereços possui dependentes!');
         }
+        $endereco->delete();
+        
+        return redirect()->away('/enderecos')
+            ->with('success', 'Endereços possui dependentes!');
     }
 }
