@@ -14,6 +14,8 @@ class EnderecoController extends Controller
     public function index()
     {
         //
+        $enderecos = Endereco::all();
+        return view('admin.enderecos.index', compact('enderecos'));
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCidadeRequest;
 use App\Http\Requests\UpdateCidadeRequest;
 use App\Models\Cidade;
+use App\Models\Estado;
 
 class CidadeController extends Controller
 {
@@ -14,6 +15,9 @@ class CidadeController extends Controller
     public function index()
     {
         //
+        $cidades = Cidade::paginate(25);
+
+        return view('admin.cidades.index', compact('cidades'));
     }
 
     /**
@@ -22,6 +26,8 @@ class CidadeController extends Controller
     public function create()
     {
         //
+        $estados = Estado::all();
+        return view('admin.cidades.create', compact('estados'));
     }
 
     /**
@@ -30,6 +36,9 @@ class CidadeController extends Controller
     public function store(StoreCidadeRequest $request)
     {
         //
+        Cidade::create($request->all());
+        return redirect()->away('/cidades')
+            ->with('success', 'Cidade possui dependentes!');
     }
 
     /**
@@ -38,6 +47,7 @@ class CidadeController extends Controller
     public function show(Cidade $cidade)
     {
         //
+        return view('admin.cidades.show', compact('cidade'));
     }
 
     /**
@@ -46,6 +56,8 @@ class CidadeController extends Controller
     public function edit(Cidade $cidade)
     {
         //
+        $estados = Estado::all();
+        return view('admin.cidades.edit', compact('cidade','estados'));
     }
 
     /**
@@ -54,6 +66,10 @@ class CidadeController extends Controller
     public function update(UpdateCidadeRequest $request, Cidade $cidade)
     {
         //
+        $cidade->update($request->all());
+
+        return redirect()->away('/cidades')
+            ->with('success', 'Cidade possui dependentes!');
     }
 
     /**
@@ -61,6 +77,13 @@ class CidadeController extends Controller
      */
     public function destroy(Cidade $cidade)
     {
-        //
+        if ($cidade->enderecos()->count() > 0) {
+            return redirect()->away('/cidades')
+                ->with('error', 'Cidade possui dependentes!');
+        }
+
+        $cidade->delete();
+        return redirect()->away('/cidades')
+            ->with('success', 'Cidade removido com sucesso!');
     }
 }
