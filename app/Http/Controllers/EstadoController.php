@@ -35,7 +35,7 @@ class EstadoController extends Controller
     {
         //
         Estado::create($request->all());
-        return redirect()->away('/estados')->with('Estado criado com sucesso!');
+        return redirect()->away('/estados')->with('success','Estado criado com sucesso!');
     }
 
     /**
@@ -63,7 +63,7 @@ class EstadoController extends Controller
     {
         //
         $estado->update($request->all());
-        return redirect()->away('/estados')->with('Estado atualizado com sucesso!');
+        return redirect()->away('/estados')->with('success','Estado atualizado com sucesso!');
     }
 
     /**
@@ -74,10 +74,10 @@ class EstadoController extends Controller
         //
         if ($estado->cidades()->count() > 0) {
 
-            return redirect()->away('/estados')->with('Estado possui dependentes!');
+            return redirect()->away('/estados')->with('error','Estado possui dependentes!');
         } else {
             $estado->delete();
         }
-        return redirect()->away('/estados')->with('Estado removido com sucesso!');
+        return redirect()->away('/estados')->with('success','Estado removido com sucesso!');
     }
 }
