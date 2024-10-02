@@ -75,12 +75,12 @@ class TipoPontoTuristicoController extends Controller
     public function destroy(TipoPontoTuristico $tipoPontoTuristico)
     {
         //
-        if ($tipoNegocio->pontosturisticos()->count() > 0) {
+        if ($tipoPontoTuristico->pontosturisticos()->count() > 0) {
             return redirect()->away('/tipopontoturisticos')
                 ->with('error', 'Tipo Ponto Turistico possui dependentes!');
         }
 
-        $tipoNegocio->delete();
+        $tipoPontoTuristico->delete();
         return redirect()->away('/tipopontoturisticos')
             ->with('success', 'Tipo Ponto Turistico removido com sucesso!');
     }
