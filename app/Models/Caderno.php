@@ -12,4 +12,8 @@ class Caderno extends Model
     // sanitização dos dados e criação em massa
     protected $fillable = ['nome'];
 
+    public function noticias(){
+        return $this->hasMany(Noticia::class);
+    }
+
 }
