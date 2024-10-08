@@ -18,8 +18,8 @@ class AutorFactory extends Factory
     {
         return [
             //
-            'nome' => $this->faker->unique()->word,
-            
+            'nome' => $this->faker->name ,   
+            'contato'=> $this->faker->phoneNumber                         
         ];
     }
 }

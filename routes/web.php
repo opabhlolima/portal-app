@@ -1,10 +1,19 @@
 <?php
 
 use App\Http\Controllers\CadernoController;
+use App\Models\Autor;
+use App\Models\Caderno;
+use App\Models\Cidade;
+use App\Models\Estado;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { 
     return view('welcome');
+});
+
+Route::get('/faker', function () { 
+  
+    dd(Caderno::factory()->create());   
 });
 
 //GET: requisicao via URL

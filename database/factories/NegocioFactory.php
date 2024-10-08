@@ -18,6 +18,13 @@ class NegocioFactory extends Factory
     {
         return [
             //
+            'nome_fantasia' => $this->faker,
+            'descricao',
+            'contato',
+            'latitude_longitude',
+            'ativo',
+            'id_tipo_negocio',
+            'id_endereco'
         ];
     }
 }
