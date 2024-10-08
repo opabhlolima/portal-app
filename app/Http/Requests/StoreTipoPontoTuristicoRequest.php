@@ -11,7 +11,7 @@ class StoreTipoPontoTuristicoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreTipoPontoTuristicoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'tipo' => 'required|min:3|max:255|unique:tipo_negocios,tipo'
         ];
     }
 }

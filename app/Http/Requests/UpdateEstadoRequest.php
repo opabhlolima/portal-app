@@ -11,7 +11,7 @@ class UpdateEstadoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,10 @@ class UpdateEstadoRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id =  $this->route('estado');
         return [
             //
+             'sigla' => 'required|min:2|max:2|unique:estados,sigla,'.$id
         ];
     }
 }

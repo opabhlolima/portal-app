@@ -29,8 +29,10 @@ class NegocioController extends Controller
         //
         $enderecos = Endereco::all();
         $tiposNegocios = TipoNegocio::all();
-        return view('admin.negocios.create', 
-        compact('negocios', 'enderecos','tiposNegocios'));
+        return view(
+            'admin.negocios.create',
+            compact('negocios', 'enderecos', 'tiposNegocios')
+        );
     }
 
     /**
@@ -41,49 +43,54 @@ class NegocioController extends Controller
         //
         Negocio::create($request->all());
         return redirect()->away('/negocios')
-        ->with('success', 'Negocio removido com sucesso!');
+            ->with('success', 'Negocio removido com sucesso!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Negocio $negocio)
+    public function show($id)
     {
         //
+        $negocio = Negocio::find($id);
         return view('admin.negocios.show', compact('negocio'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Negocio $negocio)
+    public function edit($id)
     {
         $enderecos = Endereco::all();
         $tiposNegocios = TipoNegocio::all();
-        return view('admin.negocios.edit', 
-        compact('negocio', 'enderecos','tiposNegocios'));
+        return view(
+            'admin.negocios.edit',
+            compact('negocio', 'enderecos', 'tiposNegocios')
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNegocioRequest $request, Negocio $negocio)
+    public function update(UpdateNegocioRequest $request, $id)
     {
         //
+        $negocio = Negocio::find($id);
         $negocio->update($request->all());
 
         return redirect()->away('/negocios')
-        ->with('success', 'Negocio removido com sucesso!');
+            ->with('success', 'Negocio removido com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Negocio $negocio)
+    public function destroy($id)
     {
         //
+        $negocio = Negocio::find($id);
         $negocio->delete();
         return redirect()->away('/negocios')
-        ->with('success', 'Negocio removido com sucesso!');
+            ->with('success', 'Negocio removido com sucesso!');
     }
 }

@@ -11,7 +11,7 @@ class StoreAutorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,6 +22,8 @@ class StoreAutorRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'nome' => 'required|string|min:3|max:255', 
+            'contato'=> 'required|string|min:3|max:255'
            
         ];
     }

@@ -11,7 +11,7 @@ class StoreCadernoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,7 @@ class StoreCadernoRequest extends FormRequest
     {
         return [
             //
+            'nome' => 'string|required|unique:cadernos,nome'
         ];
     }
 }

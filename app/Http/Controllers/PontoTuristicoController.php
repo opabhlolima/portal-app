@@ -48,9 +48,10 @@ class PontoTuristicoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PontoTuristico $pontoTuristico)
+    public function show($id)
     {
         //
+        $pontoTuristico = PontoTuristico::find($id);
         return view(
             'admin.pontosturisticos.show',
             compact('pontoTuristico')
@@ -60,9 +61,10 @@ class PontoTuristicoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PontoTuristico $pontoTuristico)
+    public function edit($id)
     {
         //
+        $pontoTuristico = PontoTuristico::find($id);
         $tipos = TipoPontoTuristico::all();
         $enderecos = Endereco::all();
         return view(
@@ -74,9 +76,10 @@ class PontoTuristicoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePontoTuristicoRequest $request, PontoTuristico $pontoTuristico)
+    public function update(UpdatePontoTuristicoRequest $request, $id)
     {
         //
+        $pontoTuristico = PontoTuristico::find($id);
         $pontoTuristico->update($request->all());
 
         return redirect()->away('/pontosturisticos')
@@ -86,9 +89,10 @@ class PontoTuristicoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PontoTuristico $pontoTuristico)
+    public function destroy($id)
     {
         //
+        $pontoTuristico = PontoTuristico::find($id);
         $pontoTuristico->delete();
         return redirect()->away('/pontosturisticos')
             ->with('success', 'Pontos Turistico removido com sucesso!');

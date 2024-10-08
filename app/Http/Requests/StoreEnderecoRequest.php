@@ -11,7 +11,7 @@ class StoreEnderecoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,9 @@ class StoreEnderecoRequest extends FormRequest
     {
         return [
             //
+            'logradouro' =>'required|string|min:3|max:255',
+            'cep' =>'required|string|min:9|max:9',
+            'id_cidade' => 'required|exists:cidades,id'
         ];
     }
 }
