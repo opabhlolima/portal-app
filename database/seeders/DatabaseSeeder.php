@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Caderno;
+use App\Models\Endereco;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,7 +18,17 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-            AutorSeeder::class
+            AutorSeeder::class,
+            CadernoSeeder::class,
+            TipoNegocioSeeder::class,
+            TipoPontoTuristicoSeeder::class,
+            EstadoSeeder::class,
+            CidadeSeeder::class,
+            EnderecoSeeder::class,
+            NoticiaSeeder::class,
+            NegocioSeeder::class,
+            PontoTuristicoSeeder::class
+            
         ]);
     }
 }

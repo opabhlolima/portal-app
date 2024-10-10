@@ -18,6 +18,7 @@ class Noticia extends Model
         'id_caderno'
     ];
 
+    //autor_id
     public function autor()
     {
         return $this->belongsTo(Autor::class, 'id_autor');

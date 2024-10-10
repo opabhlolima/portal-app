@@ -1,20 +1,27 @@
 <?php
 
+use App\Http\Controllers\AutorController;
 use App\Http\Controllers\CadernoController;
+use App\Http\Controllers\CidadeController;
+use App\Http\Controllers\EnderecoController;
+use App\Http\Controllers\EstadoController;
+use App\Http\Controllers\NegocioController;
+use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\PontoTuristicoController;
+use App\Http\Controllers\TipoNegocioController;
+use App\Http\Controllers\TipoPontoTuristicoController;
 use App\Models\Autor;
 use App\Models\Caderno;
 use App\Models\Cidade;
 use App\Models\Estado;
+use App\Models\TipoNegocio;
+use App\Models\TipoPontoTuristico;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () { 
+Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/faker', function () { 
-  
-    dd(Caderno::factory()->create());   
-});
 
 //GET: requisicao via URL
 //POST: requisição via cabecalho da request
@@ -23,22 +30,35 @@ Route::get('/faker', function () {
 //DELETE OU SOFTDELETE: quando eu quero apenas ocultar eu uso
 // o segundo, tem que configurar migration e model.
 
-Route::get('/cadernos',[CadernoController::class,'index'])
-->name('cadernos.index');
+// Route::get('/cadernos',[CadernoController::class,'index'])
+// ->name('cadernos.index');
 
-Route::get('/cadernos/create',[CadernoController::class,'create'])
-->name('cadernos.create');
+// Route::get('/cadernos/create',[CadernoController::class,'create'])
+// ->name('cadernos.create');
 
-Route::post('/cadernos',[CadernoController::class,'store'])
-->name('cadernos.store');
+// Route::post('/cadernos',[CadernoController::class,'store'])
+// ->name('cadernos.store');
 
-Route::get('/cadernos/{caderno}',[CadernoController::class,
-'edit'])->name('cadernos.edit');
+// Route::get('/cadernos/{caderno}',[CadernoController::class,
+// 'edit'])->name('cadernos.edit');
 
-Route::put('/cadernos/{caderno}',[CadernoController::class,
-'update'])->name('cadernos.update');
+// Route::put('/cadernos/{caderno}',[CadernoController::class,
+// 'update'])->name('cadernos.update');
 
-Route::delete('/cadernos/{caderno}',[CadernoController::class,
-'destroy'])->name('cadernos.destroy');
+// Route::delete('/cadernos/{caderno}',[CadernoController::class,
+// 'destroy'])->name('cadernos.destroy');
 //php artisan route:list+
 // Resources
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::resource('/cadernos', CadernoController::class);
+    Route::resource('/autores', AutorController::class);
+    Route::resource('/noticias', NoticiaController::class);
+    Route::resource('/estados', EstadoController::class);
+    Route::resource('/cidades', CidadeController::class);
+    Route::resource('/enderecos', EnderecoController::class);
+    Route::resource('/tipos-negocios', TipoNegocioController::class);
+    Route::resource('/tipos-ponto', TipoPontoTuristicoController::class);
+    Route::resource('/negocios', NegocioController::class);
+    Route::resource('/pontos-turisticos', PontoTuristicoController::class);
+});

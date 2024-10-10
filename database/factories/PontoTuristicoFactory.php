@@ -32,9 +32,9 @@ class PontoTuristicoFactory extends Factory
             'como_chegar' => $this->faker->text,
             'imagem' => $this->faker->imageUrl($width = 640, $height = 480, 
             'cats')  ,
-            'id_endereco' => Endereco::pluck('id')->random,
+            'id_endereco' => Endereco::pluck('id')->random(),
             'id_tipo_ponto_turistico'=> TipoPontoTuristico::pluck('id')
-            ->random
+            ->random()
         ];
     }
 }
