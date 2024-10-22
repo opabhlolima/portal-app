@@ -53,15 +53,17 @@ class NoticiaController extends Controller
     {
         //aqui vamos tratar as regras de salvamento
         //e vamos persistir no banco
+        // $noticia = $request['titulo']
         Noticia::create($request->all());
         //redirecionar ou devolver uma mensagem para o cliente
         //return redirect()->route('noticias.index');
-        return redirect()->away('/noticias')->with('success', 'Noticia criada com sucesso!');
+        return redirect()->away('/admin/noticias')->with('success', 'Noticia criada com sucesso!');
     }
 
     /**
      * Display the specified resource.
      */
+    // show(Noticia $noticia)
     public function show($id)
     {
         // $id -> recebendo via api
@@ -80,6 +82,7 @@ class NoticiaController extends Controller
     public function edit($id)
     {
         //
+        $noticia = Noticia::find($id);
         $autores  = Autor::all();
         $cadernos = Caderno::all();
         return view(
@@ -100,7 +103,7 @@ class NoticiaController extends Controller
         // }
           $noticia = Noticia::find($id);
         $noticia->update($request->all());
-        return redirect()->away('/noticias')
+        return redirect()->away('/admin/noticias')
             ->with('success', 'Noticia atualizada com sucesso!');
     }
 
@@ -111,13 +114,14 @@ class NoticiaController extends Controller
     {
         //
         // if ($cadernos->noticias()->count() > 0) {
-        //     return redirect()->away('/noticias')
-        //         ->with('error', 'Cardeno possui dependentes');
+        //     return redirect()->away('/admin/noticias')
+        //         ->with('error', 'Caderno possui dependentes');
         // }
           $noticia = Noticia::find($id);
+      
         $noticia->delete();
 
-        return redirect()->away('/noticias')
+        return redirect()->away('/admin/noticias')
             ->with('success', 'Noticia destruido com sucesso!');
     }
 }
